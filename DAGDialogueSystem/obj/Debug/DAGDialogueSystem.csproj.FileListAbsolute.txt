@@ -1,0 +1,6 @@
+C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem\DAGDialogueSystem\bin\Debug\DAGDialogueSystem.dll
+C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem\DAGDialogueSystem\bin\Debug\DAGDialogueSystem.pdb
+C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem\DAGDialogueSystem\obj\Debug\DAGDialogueSystem.csproj.AssemblyReference.cache
+C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem\DAGDialogueSystem\obj\Debug\DAGDialogueSystem.csproj.CoreCompileInputs.cache
+C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem\DAGDialogueSystem\obj\Debug\DAGDialogueSystem.dll
+C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem\DAGDialogueSystem\obj\Debug\DAGDialogueSystem.pdb
