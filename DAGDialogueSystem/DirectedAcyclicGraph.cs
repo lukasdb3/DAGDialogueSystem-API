@@ -1,4 +1,8 @@
-﻿namespace DAGDialogueSystem
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace DAGDialogueSystem
 {
     public class DirectedAcyclicGraph
     {
@@ -10,6 +14,7 @@
         {
             public int Type { get; private set; }
             public Edge[] Edges;
+            public List<Edge> Edges;
             public string Data;
 
             // constructor for Node with the type & data only.
@@ -17,10 +22,11 @@
             {
                 Type = type;
                 Data = data;
+                Edges = new List<Edge>();
             }
             
             // constructor for Node with the type & edges & data.
-            public Node(int type, Edge[] edges, string data)
+            public Node(int type, List<Edge> edges, string data)
             {
                 Type = type;
                 Edges = edges;
@@ -30,13 +36,11 @@
             // function to add an edge at the next available slot in nodes Edges array.
             private void ConnectTo(Node target)
             {
-                var position = 0;
-                var edgesCount = Edges.Length;
-                // if edges exist, get last edge plus one for position. if no edges, position equals zero.
-                if (edgesCount != 0) position = edgesCount + 1;
-                else position = 0;
-                // creates the edge at position
-                Edges[position] = new Edge(this, target);
+                // define our new edge.
+                var newEdge = new Edge(this, target);
+                Console.WriteLine("Edge created: " + newEdge.Sender.Data + " ---> " + newEdge.Receiver.Data);
+                Edges.Add(newEdge);
+                Console.WriteLine("Successful in Adding Edge!");
             }
             
             // function that adds child to node, also connects the to nodes.
@@ -53,8 +57,8 @@
         /// </summary>
         public class Edge
         {
-            public Node Sender;
-            public Node Receiver;
+            public readonly Node Sender;
+            public readonly Node Receiver;
 
             public Edge(Node sender, Node receiver)
             {
