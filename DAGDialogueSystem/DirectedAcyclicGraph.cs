@@ -13,7 +13,6 @@ namespace DAGDialogueSystem
         public class Node
         {
             public int Type { get; private set; }
-            public Edge[] Edges;
             public List<Edge> Edges;
             public string Data;
 
@@ -43,11 +42,49 @@ namespace DAGDialogueSystem
                 Console.WriteLine("Successful in Adding Edge!");
             }
             
-            // function that adds child to node, also connects the to nodes.
+            /// function that adds child to node, also connects the two nodes.
             public Node AddNode(int type, string data)
             {
                 var node = new Node(type, data);
                 ConnectTo(node);
+                return node;
+            }
+            
+            /// <summary>
+            /// Function to iterate through n node that yield returns children.
+            /// </summary>
+            /// <returns> child(s) node of this node </returns>
+            public IEnumerable<Node> IterateChildren()
+            {
+                foreach (var e in Edges)
+                {
+                    yield return e.Receiver;
+                }
+            }
+            
+            /// returns the amount of edges that node has.
+            public int EdgesCount() {return Edges.Count;}
+
+            /// returns the first edge of node.
+            public Edge GetFirstEdge() { return Edges.FirstOrDefault(); }
+
+            /// gets edge at index.
+            public Edge GetEdgeAtIndex(int i) { return Edges.ElementAt(i); }
+            
+            /// randomly chooses next edge and returns the receiver node.
+            public Node GetNextNode()
+            {
+                var rand = new Random();
+                Node node = null;
+                if (EdgesCount() == 1)
+                {
+                    node = GetFirstEdge().Receiver;
+                }
+                else
+                {
+                    var i = rand.Next(0, EdgesCount());
+                    node = GetEdgeAtIndex(i).Receiver;
+                }
                 return node;
             }
         }
