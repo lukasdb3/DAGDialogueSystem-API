@@ -10,7 +10,7 @@
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>DAGDialogueSystem</RootNamespace>
         <AssemblyName>DAGDialogueSystem</AssemblyName>
-        <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,13 +33,27 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="LSPD First Response">
+          <HintPath>..\..\..\CodingCrap\Refrences\LSPD First Response.dll</HintPath>
+        </Reference>
+        <Reference Include="RAGENativeUI">
+          <HintPath>..\..\..\CodingCrap\Refrences\RAGENativeUI.dll</HintPath>
+        </Reference>
+        <Reference Include="RagePluginHook, Version=0.0.0.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>..\packages\RagePluginHook.1.98.0\lib\net472\RagePluginHook.dll</HintPath>
+        </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
+        <Reference Include="System.Drawing" />
+        <Reference Include="System.Windows.Forms" />
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="DialogueTree.cs" />
         <Compile Include="DirectedAcyclicGraph.cs" />
+        <Compile Include="Extensions.cs" />
+        <Compile Include="Log.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>

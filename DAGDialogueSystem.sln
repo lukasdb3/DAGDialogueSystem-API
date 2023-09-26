@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAGDialogueSystem", "DAGDialogueSystem\DAGDialogueSystem.csproj", "{78BAB528-9E33-454E-A037-C5225DCE9D93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DialogueTester", "DialogueTester\DialogueTester.csproj", "{CC5F08BF-2954-41A6-AB5E-204F3D78B46F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{78BAB528-9E33-454E-A037-C5225DCE9D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78BAB528-9E33-454E-A037-C5225DCE9D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78BAB528-9E33-454E-A037-C5225DCE9D93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC5F08BF-2954-41A6-AB5E-204F3D78B46F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC5F08BF-2954-41A6-AB5E-204F3D78B46F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC5F08BF-2954-41A6-AB5E-204F3D78B46F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC5F08BF-2954-41A6-AB5E-204F3D78B46F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -16,3 +16,8 @@ C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem-API\DAGDialo
 C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem-API\DAGDialogueSystem\obj\Debug\DAGDialogueSystem.csproj.CoreCompileInputs.cache
 C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem-API\DAGDialogueSystem\obj\Debug\DAGDialogueSystem.dll
 C:\Users\lukas\Documents\GitHub\DAGDialogueSystem\DAGDialogueSystem-API\DAGDialogueSystem\obj\Debug\DAGDialogueSystem.pdb
+C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\bin\Debug\RagePluginHook.dll
+C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\bin\Debug\RagePluginHook.xml
+C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\obj\Debug\DAGDialogueSystem.csproj.CopyComplete
+C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\bin\Debug\RAGENativeUI.dll
+C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\bin\Debug\LSPD First Response.dll
