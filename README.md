@@ -7,4 +7,4 @@ DAGDialogueSytem is developed in C#. Its primary purpose is to generate distinct
 I got tired of coding dialogue in ForestryCallouts2 for one callout for hours, then looking back at it a week later trying to fix typos with not screwing anything else up.
 
 ## Current Status?
-Not usable yet. Still a WIP but I am getting close to getting it done!
+Not usable yet. Still a WIP but I am getting close to getting it done! I also still need to write a wiki on using it.
