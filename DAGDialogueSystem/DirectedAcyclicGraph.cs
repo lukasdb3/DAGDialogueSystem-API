@@ -4,21 +4,31 @@ using System.Linq;
 
 namespace DAGDialogueSystem
 {
-    public class DirectedAcyclicGraph
+    /// <summary>
+    /// Main class for DAGDialogueSystem
+    /// </summary>
+    public static class DirectedAcyclicGraph
     {
+        /// <summary>
+        /// The node class for the Directed Acyclic Graph.
+        /// Type 1, Dialogue that is said in every conversation. This is usual a starter like "Hello Officer".
+        /// Type 2, Prompt Node, initializes menu.
+        /// Type 3, Dialogue Options, Parent must be Type 2.
+        /// </summary>
         public class Node
         {
-            private int _type;
+            private readonly int _type;
             private readonly List<Edge> _edges;
             private readonly string _data;
             
             /// <summary>
-            /// Node contains one line of dialogue.
+            /// Makes a new node in memory
             /// </summary>
-            /// <param name="type">1=Hard Dialogue (Said in every conversation).
-            /// 2=Menu Node (Node where you want the user to choose dialogue choice.)
-            /// 3=Menu Option (Option for parent type 2 class.)</param>
-            /// <param name="data">dialogue line in string format.</param>
+            /// <param name="type">
+            /// Type 1, Dialogue that is said in every conversation. This is usual a starter like "Hello Officer".
+            /// Type 2, Prompt Node, initializes menu.
+            /// Type 3, Dialogue Options, Parent must be Type 2. </param>
+            /// <param name="data"> dialogue string </param>
             public Node(int type, string data)
             {
                 _type = type;
@@ -29,27 +39,26 @@ namespace DAGDialogueSystem
             /// <summary>
             /// Gets the node type.
             /// </summary>
-            /// <returns>Returns node type.</returns>
+            /// <returns>Int</returns>
             internal int GetNType() { return _type; }
 
             /// <summary>
             /// Gets the node data.
             /// </summary>
-            /// <returns>Returns node data.</returns>
+            /// <returns>String</returns>
             internal string GetData() { return _data; }
 
             /// <summary>
             /// Gets node edges.
             /// </summary>
-            /// <returns> returns list of edges.</returns>
+            /// <returns>List</returns>
             internal IEnumerable<Edge> GetEdges() { return _edges; }
-
-
+            
             /// <summary>
             /// Gets the next node in the graph.
             /// </summary>
-            /// <returns> if no edges, returns null. If one edge, return's receiver of that edge. Likewise, if more than one edge does the same thing but randomly
-            /// gets the edge. </returns>
+            /// <returns> if no edges, returns null. If one edge, return's receiver of that edge. Likewise, if more than one edge, does the same thing but randomly
+            /// gets the edge to return. </returns>
             internal Node GetNextNode()
             {
                 var rand = new Random();
@@ -69,11 +78,9 @@ namespace DAGDialogueSystem
             /// If multiple AddNodes take place on the same node. The top (most left) node will be
             /// the first edge.
             /// </summary>
-            /// <param name="type">1=Hard Dialogue (Said in every conversation).
-            /// 2=Menu Node (Node where you want the user to choose dialogue choice.)
-            /// 3=Menu Option (Option for parent type 2 class.)</param>
-            /// <param name="data">dialogue line in string format.</param>
-            /// <returns> returns the new node. </returns>
+            /// <param name="type"> 1 hard dialogue, 2 menu, 3 menu options</param>
+            /// <param name="data">dialogue line in string format</param>
+            /// <returns> Node </returns>
             public Node AddNode(int type, string data)
             {
                 var node = new Node(type, data);
@@ -84,8 +91,8 @@ namespace DAGDialogueSystem
             /// <summary>
             /// Connects this node and target node with edge.
             /// </summary>
-            /// <param name="target"> node that needs connecting.</param>
-            private void ConnectTo(Node target)
+            /// <param name="target"> node that needs connecting </param>
+            public void ConnectTo(Node target)
             {
                 // define our new edge.
                 var newEdge = new Edge(this, target);
@@ -99,7 +106,7 @@ namespace DAGDialogueSystem
             private Edge GetFirstEdge() { return _edges.FirstOrDefault(); }
 
             /// gets edge at index.
-            /// <param name="i"> the index of needed edge. </param>>
+            /// <param name="i"> the index of needed edge </param>>
             private Edge GetEdgeAtIndex(int i) { return _edges.ElementAt(i); }
         }
         
@@ -119,23 +126,3 @@ namespace DAGDialogueSystem
         }
     }
 }
-
-/*/// displays menu options and prompts for input.
-           public Node GetNextNode_Prompt()
-           {
-               var i = 1;
-               var optionNodes = new Dictionary<int, Node>();
-               Console.WriteLine();
-               Console.WriteLine("-- Options --");
-               foreach (var edge in _edges)
-               {
-                   optionNodes.Add(i, edge.Receiver);
-                   i++;
-               }
-               optionNodes = Extensions.ShuffleValues(optionNodes);
-               foreach (var node in optionNodes) Console.WriteLine(node.Key+") "+node.Value.Data);
-               Console.WriteLine("Which do you pick?!\n>>");
-               var input = int.Parse(Console.ReadLine());
-               var chosenNode = optionNodes[input];
-               return chosenNode.GetNextNode();
-           }*/

@@ -5,27 +5,29 @@ using RAGENativeUI;
 using RAGENativeUI.Elements;
 using System.Drawing;
 using LSPD_First_Response.Mod.API;
+using static DAGDialogueSystem.DirectedAcyclicGraph;
 
 namespace DAGDialogueSystem
 {
-    public class DialogueTree : DirectedAcyclicGraph
+    public class DialogueFunctions
     {
+        private static int _waitTime = 5500;
         public static UIMenu DialogueMenu = new UIMenu("Dialogue Options", "");
         private static readonly MenuPool Pool = new MenuPool();
         private static bool _continueDialogue = true;
         private static Node _currentNode = null;
         
         /// <summary>
-        /// Starts iterating through dialogue starting with root node.
+        ///  Iterates through dialogue starting with the root node.
         /// </summary>
-        /// <param name="n"> starting node</param>
+        /// <param name="n"> root node </param>
         public static void IterateDialogue(Node n)
         {
             _currentNode = n;
             Pool.Add(DialogueMenu);
             while (_currentNode != null)
             {
-                // yield gamefiber so other things can run
+                // yield game fiber so other things can run
                 GameFiber.Yield();
                 // process menu
                 Pool.ProcessMenus();
@@ -44,7 +46,7 @@ namespace DAGDialogueSystem
                 {
                     case 1:
                         DisplayData(_currentNode.GetData());
-                        GameFiber.Wait(6000);
+                        GameFiber.Wait(_waitTime);
                         _currentNode = _currentNode.GetNextNode();
                         break;
                     case 2:
@@ -56,7 +58,7 @@ namespace DAGDialogueSystem
                     case 3:
                         Log.Info("ITERATE DIALOGUE FUNCTION", "Displaying Player's Option!");
                         DisplayData("~y~You:~w~ "+_currentNode.GetData());
-                        GameFiber.Wait(6000);
+                        GameFiber.Wait(_waitTime);
                         _currentNode = _currentNode.GetNextNode();
                         break;
                 }
@@ -67,11 +69,13 @@ namespace DAGDialogueSystem
         /// <summary>
         /// Displays the node data in a subtitle.
         /// </summary>
-        /// <param name="s"> the node's data. Use n.GetData() </param>
+        /// <param name="s"> the node's data </param>
         private static void DisplayData(string s) { Game.DisplaySubtitle(s, 4000); }
         
         private static void CreateMenu(Node promptNode)
         {
+            // clear menu for good luck
+            DialogueMenu.Clear();
             // get all options from edges of promptNode
             var options = promptNode.GetEdges().Select(edge => edge.Receiver.GetData()).ToList();
             // shuffle them in any order

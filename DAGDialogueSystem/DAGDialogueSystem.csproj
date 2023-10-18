@@ -22,6 +22,7 @@
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
+        <DocumentationFile>bin\Debug\DAGDialogueSystem.xml</DocumentationFile>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,7 +51,7 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="DialogueTree.cs" />
+        <Compile Include="DialogueFunctions.cs" />
         <Compile Include="DirectedAcyclicGraph.cs" />
         <Compile Include="Extensions.cs" />
         <Compile Include="Log.cs" />

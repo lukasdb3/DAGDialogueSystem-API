@@ -21,3 +21,4 @@ C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\bin\Debu
 C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\obj\Debug\DAGDialogueSystem.csproj.CopyComplete
 C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\bin\Debug\RAGENativeUI.dll
 C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\bin\Debug\LSPD First Response.dll
+C:\Users\admin\Documents\GitHub\DAGDialogueSystem-API\DAGDialogueSystem\bin\Debug\DAGDialogueSystem.xml

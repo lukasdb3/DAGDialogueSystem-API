@@ -2,11 +2,11 @@
 
 namespace DAGDialogueSystem
 {
-    internal class Log
+    internal static class Log
     {
         internal static void Info(string sender, string m)
         {
-            Game.LogTrivial("DAGDIalogueSystem ["+sender+"] - " +m);
+            Game.LogTrivial("DAGDialogueSystem ["+sender+"] - " +m);
         }
     }
 }
