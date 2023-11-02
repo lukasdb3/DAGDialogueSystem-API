@@ -1,28 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using Rage;
 using RAGENativeUI;
 using RAGENativeUI.Elements;
-using System.Drawing;
 using LSPD_First_Response.Mod.API;
 using static DAGDialogueSystem.DirectedAcyclicGraph;
+using static DAGDialogueSystem.Type;
+using LSPD_First_Response.Mod.Callouts;
 
 namespace DAGDialogueSystem
 {
-    public class DialogueFunctions
+    /// <summary>
+    /// Class used to iterate through dialogue.
+    /// </summary>
+    public static class DialogueFunctions
     {
-        private static int _waitTime = 5500;
-        public static UIMenu DialogueMenu = new UIMenu("Dialogue Options", "");
+        private const int WaitTime = 5500;
+        /// <summary>
+        /// Menu used for all dialogue options.
+        /// </summary>
+        public static readonly UIMenu DialogueMenu = new UIMenu("Dialogue Options", "");
         private static readonly MenuPool Pool = new MenuPool();
         private static bool _continueDialogue = true;
         private static Node _currentNode = null;
-        
+
         /// <summary>
-        ///  Iterates through dialogue starting with the root node.
+        /// Iterates through dialogue starting with the root node.
         /// </summary>
+        /// <param name="callout"> current callout </param>
         /// <param name="n"> root node </param>
-        public static void IterateDialogue(Node n)
+        public static void IterateDialogue(Callout callout, Node n)
         {
+            // log stuff
+            Logger.ResetLog();
+            Logger.Log("DAGDialogueSystem Version - " + Assembly.GetExecutingAssembly().GetName().Version);
+            Logger.Log("-!!!- ----- New Working Callout is " + callout.ScriptInfo.Name.ToUpper() + " -!!!- -----");
+            
             _currentNode = n;
             Pool.Add(DialogueMenu);
             while (_currentNode != null)
@@ -32,35 +46,56 @@ namespace DAGDialogueSystem
                 // process menu
                 Pool.ProcessMenus();
                 // check if the current callout is still running if not clean dialogue and return.
-                if (!Functions.IsCalloutRunning())
+                if (!LSPD_First_Response.Mod.API.Functions.IsCalloutRunning())
                 {
+                    Logger.Log("The current callout has ended. Ending dialogue.");
                     Clean();
                     return;
                 }
                 // if dialogue paused and menu is closed indicating player closed the option menu, redisplay it.
-                if (!_continueDialogue && !DialogueMenu.Visible) DialogueMenu.Visible = true;
+                if (!_continueDialogue && !DialogueMenu.Visible)
+                {
+                    DialogueMenu.Visible = true;
+                    Logger.Log("Prevented closing menu before choosing an option!");
+                }
                 // if dialogue paused skip the rest and do next iteration.
                 if (!_continueDialogue) continue;
-                Log.Info("ITERATE DIALOGUE FUNCTION", "Getting Node Type & Displaying!");
+                
+                // log stuff
+                Logger.Log("Current Node Type = " + _currentNode.GetNType());
+                Logger.Log("Current Node Data = " + _currentNode.GetData());
+                Logger.Log("Current Node Edges Count = " + _currentNode.GetEdges().Count());
+                if (_currentNode.GetNType() == Type.Action)  Logger.Log("Current Node Action = " + _currentNode.Action.Method.Name);
+                
                 switch (_currentNode.GetNType())
                 {
-                    case 1:
+                    case Dialogue:
+                        Logger.Log("Displaying data -[ "+_currentNode.GetData()+" ]-");
                         DisplayData(_currentNode.GetData());
-                        GameFiber.Wait(_waitTime);
+                        GameFiber.Wait(WaitTime);
                         _currentNode = _currentNode.GetNextNode();
+                        Logger.Log("Processing Current Node Finished!\n" +
+                                   "-------------------------------------------------");
                         break;
-                    case 2:
-                        Log.Info("ITERATE DIALOGUE FUNCTION", "Going to CreateMenu() w/ current node");
+                    case Prompt:
                         _continueDialogue = false;
                         CreateMenu(_currentNode);
                         GameFiber.Wait(1000);
+                        Logger.Log("Processing Current Node Finished!\n" +
+                                   "-------------------------------------------------");
                         break;
-                    case 3:
-                        Log.Info("ITERATE DIALOGUE FUNCTION", "Displaying Player's Option!");
+                    case Option:
                         DisplayData("~y~You:~w~ "+_currentNode.GetData());
-                        GameFiber.Wait(_waitTime);
+                        GameFiber.Wait(WaitTime);
                         _currentNode = _currentNode.GetNextNode();
+                        Logger.Log("Processing Current Node Finished!\n" +
+                                   "-------------------------------------------------");
                         break;
+                    case Action:
+                        _currentNode.Action();
+                        Logger.Log("Processing Current Node Finished!\n" +
+                                   "-------------------------------------------------");
+                        return;
                 }
             }
             Clean();
@@ -76,14 +111,20 @@ namespace DAGDialogueSystem
         {
             // clear menu for good luck
             DialogueMenu.Clear();
+            Logger.Log("Cleared menu");
             // get all options from edges of promptNode
             var options = promptNode.GetEdges().Select(edge => edge.Receiver.GetData()).ToList();
             // shuffle them in any order
             Extensions.Shuffle(options);
             // add them to menu
-            foreach (var option in options) DialogueMenu.AddItem(new UIMenuItem(option));
+            Logger.Log("Adding options to menu");
+            foreach (var option in options)
+            {
+                Logger.Log(option);
+                DialogueMenu.AddItem(new UIMenuItem(option));
+            }
             
-            // Customization
+            // customization
             var dialogueMenuTitleStyle = DialogueMenu.TitleStyle;
             dialogueMenuTitleStyle.Font = TextFont.Monospace;
             dialogueMenuTitleStyle.DropShadow = true;
@@ -92,28 +133,28 @@ namespace DAGDialogueSystem
             DialogueMenu.AllowCameraMovement = false;
 
             DialogueMenu.Visible = true;
-            Log.Info("CREATE MENU", "Menu Displayed!");
+            
+            // wait for option to be selected
             DialogueMenu.OnItemSelect += DialogueMenuOnOnItemSelect;
         }
 
         private static void DialogueMenuOnOnItemSelect(UIMenu sender, UIMenuItem selecteditem, int index)
         {
-            Log.Info("ON ITEM SELECT", "Selected Option = " + selecteditem.Text);
             DialogueMenu.Visible = false;
-            Log.Info("ON ITEM SELECT", "Menu Hidden!");
+            // go through each edge and get the option node that was choosen.
             foreach (var node in _currentNode.GetEdges().Select(edge => edge.Receiver))
             {
                 Game.LogTrivial(node.GetData() + " " + selecteditem.Text);
                 if (selecteditem.Text != node.GetData()) continue;
-                Log.Info("ON ITEM SELECT", "Selecting Option Node for Next Node!");
+                Logger.Log("Option " + selecteditem.Text + " was selected!");
                 _continueDialogue = true;
                 _currentNode = node;
                 return;
             }
         }
-
+        
         /// <summary>
-        /// Sets the global class variables back to default.
+        /// Cleans up and resets the menu.
         /// </summary>
         public static void Clean()
         {

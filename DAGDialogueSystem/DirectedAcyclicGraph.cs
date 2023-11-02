@@ -5,42 +5,73 @@ using System.Linq;
 namespace DAGDialogueSystem
 {
     /// <summary>
+    /// Type of nodes, Dialogue, Prompt, Option, and Action.
+    /// </summary>
+    public enum Type
+    {
+        /// <summary>
+        /// node dialogue line said by npc
+        /// </summary>
+        Dialogue,
+        /// <summary>
+        /// node to initialize menu
+        /// </summary>
+        Prompt,
+        /// <summary>
+        /// node to add dialogue line to prompt node
+        /// </summary>
+        Option,
+        /// <summary>
+        /// node that runs an action
+        /// </summary>
+        Action
+    }
+    
+    /// <summary>
     /// Main class for DAGDialogueSystem
     /// </summary>
-    public static class DirectedAcyclicGraph
+    public abstract class DirectedAcyclicGraph
     {
         /// <summary>
         /// The node class for the Directed Acyclic Graph.
-        /// Type 1, Dialogue that is said in every conversation. This is usual a starter like "Hello Officer".
-        /// Type 2, Prompt Node, initializes menu.
-        /// Type 3, Dialogue Options, Parent must be Type 2.
         /// </summary>
         public class Node
         {
-            private readonly int _type;
+            private readonly Type _type;
             private readonly List<Edge> _edges;
             private readonly string _data;
+            public readonly Action Action;
             
             /// <summary>
             /// Makes a new node in memory
             /// </summary>
-            /// <param name="type">
-            /// Type 1, Dialogue that is said in every conversation. This is usual a starter like "Hello Officer".
-            /// Type 2, Prompt Node, initializes menu.
-            /// Type 3, Dialogue Options, Parent must be Type 2. </param>
+            /// <param name="type"> the type of node, NodeTypes.Type </param>
             /// <param name="data"> dialogue string </param>
-            public Node(int type, string data)
+            public Node(Type type, string data)
             {
                 _type = type;
                 _data = data;
                 _edges = new List<Edge>();
+            }
+
+            /// <summary>
+            /// Makes a new action node
+            /// </summary>
+            /// <param name="type"> the type of node, NodeTypes.Type </param>
+            /// <param name="action"> method name wanting to run if this node is chosen randomly or directly chosen if its the only edge.</param>
+            private Node(Type type, Action action)
+            {
+                _type = type;
+                _data = "[This is a Action Node]";
+                _edges = new List<Edge>();
+                Action = action;
             }
             
             /// <summary>
             /// Gets the node type.
             /// </summary>
             /// <returns>Int</returns>
-            internal int GetNType() { return _type; }
+            internal Type GetNType() { return _type; }
 
             /// <summary>
             /// Gets the node data.
@@ -53,24 +84,18 @@ namespace DAGDialogueSystem
             /// </summary>
             /// <returns>List</returns>
             internal IEnumerable<Edge> GetEdges() { return _edges; }
-            
+
             /// <summary>
             /// Gets the next node in the graph.
             /// </summary>
-            /// <returns> if no edges, returns null. If one edge, return's receiver of that edge. Likewise, if more than one edge, does the same thing but randomly
-            /// gets the edge to return. </returns>
+            /// <returns> Receiver of chosen edge </returns>
             internal Node GetNextNode()
             {
-                var rand = new Random();
-                Node node;
                 if (EdgesCount() < 1) return null;
-                if (EdgesCount() == 1) node = GetFirstEdge().Receiver;
-                else
-                {
-                    var i = rand.Next(0, EdgesCount());
-                    node = GetEdgeAtIndex(i).Receiver;
-                }
-                return node;
+
+                var rand = new Random();
+                var randomIndex = rand.Next(EdgesCount());
+                return GetEdgeAtIndex(randomIndex).Receiver;
             }
             
             /// <summary>
@@ -78,12 +103,24 @@ namespace DAGDialogueSystem
             /// If multiple AddNodes take place on the same node. The top (most left) node will be
             /// the first edge.
             /// </summary>
-            /// <param name="type"> 1 hard dialogue, 2 menu, 3 menu options</param>
+            /// <param name="type"> the type of node, NodeTypes.Type </param>
             /// <param name="data">dialogue line in string format</param>
             /// <returns> Node </returns>
-            public Node AddNode(int type, string data)
+            public Node AddNode(Type type, string data)
             {
                 var node = new Node(type, data);
+                ConnectTo(node);
+                return node;
+            }
+
+            /// <summary>
+            /// Adds a edge between this node and a new action node.
+            /// </summary>
+            /// <param name="method"> the method that needs to be ran</param>
+            /// <returns></returns>
+            public Node AddNode(Action method)
+            {
+                var node = new Node(Type.Action, method);
                 ConnectTo(node);
                 return node;
             }
