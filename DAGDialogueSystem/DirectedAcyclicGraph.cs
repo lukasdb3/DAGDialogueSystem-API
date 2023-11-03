@@ -12,7 +12,11 @@ namespace DAGDialogueSystem
         /// <summary>
         /// node dialogue line said by npc
         /// </summary>
-        Dialogue,
+        NpcDialogue,
+        ///
+        /// node dialogue line said by player
+        ///
+        PlayerDialogue,
         /// <summary>
         /// node to initialize menu
         /// </summary>
@@ -58,11 +62,25 @@ namespace DAGDialogueSystem
             /// Makes a new action node
             /// </summary>
             /// <param name="type"> the type of node, NodeTypes.Type </param>
-            /// <param name="action"> method name wanting to run if this node is chosen randomly or directly chosen if its the only edge.</param>
+            /// <param name="action"> method name wanting to run if this node is chosen randomly or directly chosen if its the only edge </param>
             private Node(Type type, Action action)
             {
                 _type = type;
                 _data = "[This is a Action Node]";
+                _edges = new List<Edge>();
+                Action = action;
+            }
+            
+            /// <summary>
+            /// Makes a new action node with dialogue
+            /// </summary>
+            /// <param name="type"> he type of node, NodeTypes.Type </param>
+            /// <param name="action"> method name wanting to run if this node is chosen randomly or directly chosen if its the only edge </param>
+            /// <param name="data"> dialogue line </param>
+            private Node(Type type, Action action, string data)
+            {
+                _type = type;
+                _data = data;
                 _edges = new List<Edge>();
                 Action = action;
             }
@@ -118,11 +136,31 @@ namespace DAGDialogueSystem
             /// </summary>
             /// <param name="method"> the method that needs to be ran</param>
             /// <returns></returns>
-            public Node AddNode(Action method)
+            public Node AddActionNode(Action method)
             {
                 var node = new Node(Type.Action, method);
                 ConnectTo(node);
                 return node;
+            }
+            
+            public Node AddActionNodeWithDialogue(Action method, string data)
+            {
+                var node = new Node(Type.Action, method);
+                ConnectTo(node);
+                return node;
+            }
+
+            /// <summary>
+            /// Links n amount of nodes as parents (senders) of this node. 
+            /// </summary>
+            /// <param name="childNodes"> IEnumerable list of nodes </param>
+            public void LinkNodesAsParents(IEnumerable<Node> childNodes)
+            {
+                foreach (var n in childNodes)
+                {
+                    var newEdge = new Edge(n, this);
+                    n._edges.Add(newEdge);
+                }
             }
             
             /// <summary>

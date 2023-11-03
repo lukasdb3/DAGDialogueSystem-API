@@ -30,7 +30,9 @@ namespace DAGDialogueSystem
         /// </summary>
         /// <param name="callout"> current callout </param>
         /// <param name="n"> root node </param>
-        public static void IterateDialogue(Callout callout, Node n)
+        /// <param name="npcPrefix"> npc prefix that comes before dialogue string, can change color, but it is reset back to white before dialogue string </param>
+        /// <param name="playerPrefix"> player prefix that comes before dialogue string, can change color, but it is reset back to white before dialogue string </param>
+        public static void IterateDialogue(Callout callout, Node n, string npcPrefix, string playerPrefix)
         {
             // log stuff
             Logger.ResetLog();
@@ -69,9 +71,13 @@ namespace DAGDialogueSystem
                 
                 switch (_currentNode.GetNType())
                 {
-                    case Dialogue:
+                    case NpcDialogue or PlayerDialogue:
                         Logger.Log("Displaying data -[ "+_currentNode.GetData()+" ]-");
-                        DisplayData(_currentNode.GetData());
+                        // if type is npc dialogue display dialogue with npc prefix, if not do player prefix.
+                        if (_currentNode.GetNType().Equals(NpcDialogue)) 
+                            DisplayData(npcPrefix +":~w~ "+_currentNode.GetData());
+                        else 
+                            DisplayData(playerPrefix +":~w~ "+_currentNode.GetData());
                         GameFiber.Wait(WaitTime);
                         _currentNode = _currentNode.GetNextNode();
                         Logger.Log("Processing Current Node Finished!\n" +
@@ -85,13 +91,15 @@ namespace DAGDialogueSystem
                                    "-------------------------------------------------");
                         break;
                     case Option:
-                        DisplayData("~y~You:~w~ "+_currentNode.GetData());
+                        DisplayData(playerPrefix+":~w~ "+_currentNode.GetData());
                         GameFiber.Wait(WaitTime);
                         _currentNode = _currentNode.GetNextNode();
                         Logger.Log("Processing Current Node Finished!\n" +
                                    "-------------------------------------------------");
                         break;
                     case Action:
+                        if (_currentNode.GetData() == "[This is a Action Node]") DisplayData(npcPrefix+":~w~ "+_currentNode.GetData());
+                        GameFiber.Wait(500);
                         _currentNode.Action();
                         Logger.Log("Processing Current Node Finished!\n" +
                                    "-------------------------------------------------");
@@ -141,6 +149,12 @@ namespace DAGDialogueSystem
         private static void DialogueMenuOnOnItemSelect(UIMenu sender, UIMenuItem selecteditem, int index)
         {
             DialogueMenu.Visible = false;
+            // return after selection if no options in prompt node
+            if (!_currentNode.GetEdges().Any())
+            {
+                _currentNode = null;
+                return;
+            }
             // go through each edge and get the option node that was choosen.
             foreach (var node in _currentNode.GetEdges().Select(edge => edge.Receiver))
             {
