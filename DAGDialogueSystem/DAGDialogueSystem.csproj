@@ -36,10 +36,10 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="LSPD First Response">
-          <HintPath>..\..\..\CodingCrap\Refrences\LSPD First Response.dll</HintPath>
+          <HintPath>E:\Coding\Refrences\LSPD First Response.dll</HintPath>
         </Reference>
         <Reference Include="RAGENativeUI">
-          <HintPath>..\..\..\CodingCrap\Refrences\RAGENativeUI.dll</HintPath>
+          <HintPath>E:\Coding\Refrences\RAGENativeUI.dll</HintPath>
         </Reference>
         <Reference Include="RagePluginHook, Version=0.0.0.0, Culture=neutral, processorArchitecture=Amd64">
           <HintPath>..\packages\RagePluginHook.1.98.0\lib\net472\RagePluginHook.dll</HintPath>
@@ -57,6 +57,9 @@
         <Compile Include="Extensions.cs" />
         <Compile Include="Logger.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

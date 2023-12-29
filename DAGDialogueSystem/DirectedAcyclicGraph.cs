@@ -34,7 +34,7 @@ namespace DAGDialogueSystem
     /// <summary>
     /// Main class for DAGDialogueSystem
     /// </summary>
-    public abstract class DirectedAcyclicGraph
+    public class DirectedAcyclicGraph
     {
         /// <summary>
         /// The node class for the Directed Acyclic Graph.
@@ -44,6 +44,9 @@ namespace DAGDialogueSystem
             private readonly Type _type;
             private readonly List<Edge> _edges;
             private readonly string _data;
+            /// <summary>
+            /// The method to be ran when in a action node
+            /// </summary>
             public readonly Action Action;
             
             /// <summary>
@@ -132,7 +135,7 @@ namespace DAGDialogueSystem
             }
 
             /// <summary>
-            /// Adds a edge between this node and a new action node.
+            /// Adds a edge between this node and a new action node with no dialogue.
             /// </summary>
             /// <param name="method"> the method that needs to be ran</param>
             /// <returns></returns>
@@ -143,6 +146,12 @@ namespace DAGDialogueSystem
                 return node;
             }
             
+            /// <summary>
+            /// Adds a edge between this node and a new action node with dialogue.
+            /// </summary>
+            /// <param name="method"> the method that needs to be ran </param>
+            /// <param name="data"> dialogue line in string format </param>
+            /// <returns></returns>
             public Node AddActionNodeWithDialogue(Action method, string data)
             {
                 var node = new Node(Type.Action, method);

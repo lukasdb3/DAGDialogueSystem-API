@@ -29,10 +29,11 @@ namespace DAGDialogueSystem
         /// Iterates through dialogue starting with the root node.
         /// </summary>
         /// <param name="callout"> current callout </param>
+        /// <param name="converser"> the ped entity talking to the player</param>
         /// <param name="n"> root node </param>
         /// <param name="npcPrefix"> npc prefix that comes before dialogue string, can change color, but it is reset back to white before dialogue string </param>
         /// <param name="playerPrefix"> player prefix that comes before dialogue string, can change color, but it is reset back to white before dialogue string </param>
-        public static void IterateDialogue(Callout callout, Node n, string npcPrefix, string playerPrefix)
+        public static void IterateDialogue(Callout callout, Ped converser, Node n, string npcPrefix, string playerPrefix)
         {
             // log stuff
             Logger.ResetLog();
@@ -48,10 +49,10 @@ namespace DAGDialogueSystem
                 // process menu
                 Pool.ProcessMenus();
                 // check if the current callout is still running if not clean dialogue and return.
-                if (!LSPD_First_Response.Mod.API.Functions.IsCalloutRunning())
+                if (!LSPD_First_Response.Mod.API.Functions.IsCalloutRunning() || converser.IsDead)
                 {
-                    Logger.Log("The current callout has ended. Ending dialogue.");
-                    Clean();
+                    Logger.Log("The current callout has ended or the suspect/witness has died!. Ending dialogue.");
+                    Finish();
                     return;
                 }
                 // if dialogue paused and menu is closed indicating player closed the option menu, redisplay it.
@@ -106,7 +107,7 @@ namespace DAGDialogueSystem
                         return;
                 }
             }
-            Clean();
+            Finish();
         }
 
         /// <summary>
@@ -170,13 +171,14 @@ namespace DAGDialogueSystem
         /// <summary>
         /// Cleans up and resets the menu.
         /// </summary>
-        public static void Clean()
+        public static void Finish()
         {
-            Game.LogTrivial("Dialogue Cleaning Up!");
+            Game.LogTrivial("Dialogue Finishing Up!");
             DialogueMenu.Clear();
             Pool.Clear();
             _continueDialogue = true;
             _currentNode = null;
+            Game.DisplayHelp("Dialogue Completed", 5000);
         }
     }
 }
