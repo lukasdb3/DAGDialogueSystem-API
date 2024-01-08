@@ -1,5 +1,4 @@
-# Dag-DialogueSystem-API
-Direct Acyclic Graph Dialogue System Application Programming Interface
+# DAG-DialogueSystem-API
 
 ## What is this?
 DAGDialogueSytem is developed in C#. Its primary purpose is to generate distinctive dialogue scenarios using directed acyclic graphs (DAGs). This plugin is exclusively compatible with the LSPDFR plugin and RagePluginHook plugin. To function properly, it mandates the presence of RageNativeUI. Developers who use this API can expect extensive customization options, as the plugin offers full customization capabilities, allowing for the creation of highly personalized dialogue scenarios within the supported platforms.
