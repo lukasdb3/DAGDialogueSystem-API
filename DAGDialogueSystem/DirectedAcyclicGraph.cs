@@ -154,7 +154,7 @@ namespace DAGDialogueSystem
             /// <returns></returns>
             public Node AddActionNodeWithDialogue(Action method, string data)
             {
-                var node = new Node(Type.Action, method);
+                var node = new Node(Type.Action, method, data);
                 ConnectTo(node);
                 return node;
             }

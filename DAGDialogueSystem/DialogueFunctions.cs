@@ -99,7 +99,7 @@ namespace DAGDialogueSystem
                                    "-------------------------------------------------");
                         break;
                     case Action:
-                        if (_currentNode.GetData() == "[This is a Action Node]") DisplayData(npcPrefix+":~w~ "+_currentNode.GetData());
+                        if (_currentNode.GetData() != "[This is a Action Node]") DisplayData(npcPrefix+":~w~ "+_currentNode.GetData());
                         GameFiber.Wait(500);
                         _currentNode.Action();
                         Logger.Log("Processing Current Node Finished!\n" +
