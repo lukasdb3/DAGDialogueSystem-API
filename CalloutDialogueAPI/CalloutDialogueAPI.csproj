@@ -8,14 +8,14 @@
         <ProjectGuid>{78BAB528-9E33-454E-A037-C5225DCE9D93}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>DAGDialogueSystem</RootNamespace>
-        <AssemblyName>DAGDialogueSystem</AssemblyName>
+        <RootNamespace>CalloutDialogueAPI</RootNamespace>
+        <AssemblyName>CalloutDialogueAPI</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
+        <PlatformTarget>x64</PlatformTarget>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
@@ -26,7 +26,7 @@
         <DocumentationFile>bin\Debug\DAGDialogueSystem.xml</DocumentationFile>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
+        <PlatformTarget>x64</PlatformTarget>
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
         <OutputPath>bin\Release\</OutputPath>
@@ -36,13 +36,13 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="LSPD First Response">
-          <HintPath>E:\Coding\Refrences\LSPD First Response.dll</HintPath>
+          <HintPath>..\..\..\source\repos\lukasdb3\Forestry-Callouts\dependencies\LSPD First Response.dll</HintPath>
         </Reference>
         <Reference Include="RAGENativeUI">
-          <HintPath>E:\Coding\Refrences\RAGENativeUI.dll</HintPath>
+          <HintPath>..\..\..\source\repos\lukasdb3\Forestry-Callouts\dependencies\RAGENativeUI.dll</HintPath>
         </Reference>
         <Reference Include="RagePluginHook, Version=0.0.0.0, Culture=neutral, processorArchitecture=Amd64">
-          <HintPath>..\packages\RagePluginHook.1.98.0\lib\net472\RagePluginHook.dll</HintPath>
+          <HintPath>..\packages\RagePluginHook.1.109.1\lib\net472\RagePluginHook.dll</HintPath>
         </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Core"/>

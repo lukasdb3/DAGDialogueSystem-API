@@ -4,14 +4,15 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DAGDialogueSystem")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("CalloutDialogueAPI")]
+[assembly: AssemblyDescription("A lightweight API for LSPDFR callout developers to build interactive dialogue scenarios.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DAGDialogueSystem")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
+[assembly: AssemblyCompany("lukasdb3")]
+[assembly: AssemblyProduct("CalloutDialogueAPI")]
+[assembly: AssemblyCopyright("Copyright © 2025 lukasdb3")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: AssemblyMetadata("License", "MIT License")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

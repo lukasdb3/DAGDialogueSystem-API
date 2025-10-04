@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAGDialogueSystem", "DAGDialogueSystem\DAGDialogueSystem.csproj", "{78BAB528-9E33-454E-A037-C5225DCE9D93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalloutDialogueAPI", "CalloutDialogueAPI\CalloutDialogueAPI.csproj", "{78BAB528-9E33-454E-A037-C5225DCE9D93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

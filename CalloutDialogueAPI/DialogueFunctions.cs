@@ -1,15 +1,13 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using Rage;
 using RAGENativeUI;
 using RAGENativeUI.Elements;
-using LSPD_First_Response.Mod.API;
-using static DAGDialogueSystem.DirectedAcyclicGraph;
-using static DAGDialogueSystem.Type;
+using static CalloutDialogueAPI.DirectedAcyclicGraph;
+using static CalloutDialogueAPI.Type;
 using LSPD_First_Response.Mod.Callouts;
 
-namespace DAGDialogueSystem
+namespace CalloutDialogueAPI
 {
     /// <summary>
     /// Class used to iterate through dialogue.
@@ -37,7 +35,7 @@ namespace DAGDialogueSystem
         {
             // log stuff
             Logger.ResetLog();
-            Logger.Log("DAGDialogueSystem Version - " + Assembly.GetExecutingAssembly().GetName().Version);
+            Logger.Log("CalloutDialogueAPI Version - " + Assembly.GetExecutingAssembly().GetName().Version);
             Logger.Log("-!!!- ----- New Working Callout is " + callout.ScriptInfo.Name.ToUpper() + " -!!!- -----");
             
             _currentNode = n;

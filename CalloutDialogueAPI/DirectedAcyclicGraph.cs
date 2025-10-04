@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DAGDialogueSystem
+namespace CalloutDialogueAPI
 {
     /// <summary>
     /// Type of nodes, Dialogue, Prompt, Option, and Action.

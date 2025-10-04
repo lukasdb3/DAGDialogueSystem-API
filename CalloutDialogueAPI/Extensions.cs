@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Rage;
 using RAGENativeUI;
 
-namespace DAGDialogueSystem
+namespace CalloutDialogueAPI
 {
     internal static class Extensions
     {

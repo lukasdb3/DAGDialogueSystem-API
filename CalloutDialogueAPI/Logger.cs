@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace DAGDialogueSystem
+namespace CalloutDialogueAPI
 {
     /// <summary>
     /// Logs dialogue info to DAGDialogueSystemLOG
